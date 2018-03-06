@@ -1,11 +1,9 @@
 ﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Roslyner.Web.Models
 {
@@ -17,6 +15,7 @@ namespace Roslyner.Web.Models
         {
             this._code = code;
         }
+
         public IEnumerator<byte> GetEnumerator()
         {
             using (var dll = new MemoryStream())
@@ -36,7 +35,6 @@ namespace Roslyner.Web.Models
                     .ToList()
                     .GetEnumerator();
             }
-           
         }
 
         IEnumerator IEnumerable.GetEnumerator()

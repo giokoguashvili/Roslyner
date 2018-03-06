@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 
 namespace Roslyner.Web.Models
 {
@@ -16,6 +15,7 @@ namespace Roslyner.Web.Models
             _assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
             this._namespace = _namespace;
         }
+
         public int Sum(int a, int b)
         {
             var type = _assembly.Value.GetType(_namespace);
