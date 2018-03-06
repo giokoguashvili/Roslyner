@@ -46,7 +46,11 @@ namespace Roslyner.Test
              })
              .catch((err: any) => console.log(err));
     }
-    
+    private onChange() {
+        const model = (this.refs.monaco as any).editor.getModel();
+        const value = model.getValue();
+        this.setState({ code: value });
+    }
     public render() {
         return <div>
             <MonacoEditor
@@ -55,6 +59,7 @@ namespace Roslyner.Test
                 height="600"
                 language="csharp"
                 theme="vs-dark"
+                onChange={() => this.onChange()}
                 value={ this.state.code }
             />
             <div>
