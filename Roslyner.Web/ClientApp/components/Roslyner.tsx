@@ -3,7 +3,16 @@ import { RouteComponentProps } from 'react-router';
 import MonacoEditor from 'react-monaco-editor';
 import axios from 'axios';
 
-export class Roslyner extends React.Component<RouteComponentProps<{}>, { codeResult: string, code: string }> {
+interface MonacoEditorModel {
+    codeResult: string,
+    code: string
+}
+
+class RoslynerController {
+
+}
+
+export class Roslyner extends React.Component<RouteComponentProps<{}>, MonacoEditorModel> {
     constructor(props: RouteComponentProps<{}>) {
         super(props);
         this.state = {
@@ -31,14 +40,9 @@ namespace Roslyner.Test
 }`
         }
     }
-    private Run() {
-        const model = (this.refs.monaco as any).editor.getModel();
-        const value = model.getValue();
-
+    private run(code: string) {
          axios
-             .post('/Roslyner/Build', {
-                 code : value
-             })
+             .post('/Roslyner/Build', { code })
              .then((res: any) => {
                  this.setState({ 
                      codeResult: res.data.codeResult 
@@ -46,11 +50,15 @@ namespace Roslyner.Test
              })
              .catch((err: any) => console.log(err));
     }
-    private onChange() {
-        const model = (this.refs.monaco as any).editor.getModel();
-        const value = model.getValue();
-        this.setState({ code: value });
+
+    private onChange(code: string) {
+        this.setState({ code });
     }
+
+    private editorValue(): string {
+        return (this.refs.monaco as any).editor.getModel().getValue();
+    }
+
     public render() {
         return <div>
             <MonacoEditor
@@ -59,13 +67,13 @@ namespace Roslyner.Test
                 height="600"
                 language="csharp"
                 theme="vs-dark"
-                onChange={() => this.onChange()}
+                onChange={() => this.onChange(this.editorValue())}
                 value={ this.state.code }
             />
             <div>
                 {this.state.codeResult}
             </div>
-            <button onClick={ () => this.Run() }>Run</button>
+            <button onClick={() => this.run(this.editorValue()) }>Run</button>
         </div>
     }
 }

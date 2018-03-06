@@ -8,17 +8,17 @@ namespace Roslyner.Web.Models
 {
     public class InjectedObject : IFoo
     {
-        private readonly Lazy<Assembly> assembly;
-        private readonly string _Namespace;
+        private readonly Lazy<Assembly> _assembly;
+        private readonly string _namespace;
 
         public InjectedObject(IEnumerable<byte> compiledCode, string _namespace)
         {
-            assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
-            _Namespace = _namespace;
+            _assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
+            this._namespace = _namespace;
         }
         public int Sum(int a, int b)
         {
-            var type = assembly.Value.GetType(_Namespace);
+            var type = _assembly.Value.GetType(_namespace);
             var obj = (IFoo)Activator.CreateInstance(type);
             return obj.Sum(a, b);
         }

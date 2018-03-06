@@ -11,11 +11,11 @@ namespace Roslyner.Web.Models
 {
     public class CompiledCode : IEnumerable<byte>
     {
-        private readonly string code;
+        private readonly string _code;
 
         public CompiledCode(string code)
         {
-            this.code = code;
+            this._code = code;
         }
         public IEnumerator<byte> GetEnumerator()
         {
@@ -23,7 +23,7 @@ namespace Roslyner.Web.Models
             {
                 CSharpCompilation.Create(
                     "Foo",
-                    new[] { CSharpSyntaxTree.ParseText(code) },
+                    new[] { CSharpSyntaxTree.ParseText(_code) },
                     references: new MetadataReference[]
                     {
                         MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
