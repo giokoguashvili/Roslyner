@@ -1,7 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = (env) => {
     const extractCSS = new ExtractTextPlugin('vendor.css');
@@ -35,13 +34,7 @@ module.exports = (env) => {
             }),
             new webpack.DefinePlugin({
                 'process.env.NODE_ENV': isDevBuild ? '"development"' : '"production"'
-            }),
-            new CopyWebpackPlugin([
-                {
-                    from: 'node_modules/monaco-editor/min/vs',
-                    to: 'vs',
-                }
-            ])
+            })
         ].concat(isDevBuild ? [] : [
             new webpack.optimize.UglifyJsPlugin()
         ])
