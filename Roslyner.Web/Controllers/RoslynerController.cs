@@ -16,30 +16,16 @@ namespace Roslyner.Web.Controllers
         [HttpPost]
         public JsonResult Build([FromBody] MonacoEditorModel model)
         {
-            using (var dll = new MemoryStream())
-            {
-                CSharpCompilation.Create(
-                    "Foo",
-                    new[] { CSharpSyntaxTree.ParseText(model.Code) },
-                    references: new MetadataReference[]
-                    {
-                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                        MetadataReference.CreateFromFile(typeof(Program).Assembly.Location)
-                    },
-                    options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
-                ).Emit(dll);
-                var assembly = Assembly.Load(
-                            dll.ToArray()
-                        );
-
-                var type = assembly.GetType("Roslyner.Test.Foo");
-                var obj = (IFoo)Activator.CreateInstance(type);
-                return Json(new
-                {
-                    codeResult = obj.Sum(27, 14)
-                });
-            }
-        
+            return Json(
+                new BuildResult(
+                    new InjectedObject(
+                        new CompiledCode(model.Code),
+                        "Roslyner.Test.Foo"
+                    )
+                    .Sum(27, 14)
+                    .ToString()
+                )
+            );
         }
     }
 }
