@@ -14,35 +14,13 @@ namespace Roslyner.Web.Controllers
     public class RoslynerController : Controller
     {
         [HttpPost]
-        public JsonResult Build(string code)
+        public JsonResult Build([FromBody] MonacoEditorModel model)
         {
-            var tree = CSharpSyntaxTree.ParseText(@"
-using System;
-using Roslyner.Web.Models;
-
-namespace Roslyner.Test
-{
-    public class Foo : IFoo
-    {
-        public int Sum(int a, int b)
-        {
-            return 2 * (a + b);
-        }
-        public int Method()
-        {
-            //Console.WriteLine(""Hello from Foo"");
-            return 27;
-        }
-        public void Method1()
-        {
-        }
-    }
-}");
             using (var dll = new MemoryStream())
             {
                 CSharpCompilation.Create(
                     "Foo",
-                    new[] { tree },
+                    new[] { CSharpSyntaxTree.ParseText(model.Code) },
                     references: new MetadataReference[]
                     {
                         MetadataReference.CreateFromFile(typeof(object).Assembly.Location),

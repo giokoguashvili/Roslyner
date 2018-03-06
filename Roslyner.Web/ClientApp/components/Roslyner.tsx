@@ -3,15 +3,12 @@ import { RouteComponentProps } from 'react-router';
 import MonacoEditor from 'react-monaco-editor';
 import axios from 'axios';
 
-export class Roslyner extends React.Component<RouteComponentProps<{}>, { codeResult: String }> {
+export class Roslyner extends React.Component<RouteComponentProps<{}>, { codeResult: string, code: string }> {
     constructor(props: RouteComponentProps<{}>) {
         super(props);
         this.state = {
-            codeResult: ""
-        }
-    }
-    private Run() {
-        const value = `using System;
+            codeResult: "Empty",
+            code: `using System;
 using Roslyner.Web.Models;
 
 namespace Roslyner.Test
@@ -31,7 +28,12 @@ namespace Roslyner.Test
         {
         }
     }
-}`;
+}`
+        }
+    }
+    private Run() {
+        const model = (this.refs.monaco as any).editor.getModel();
+        const value = model.getValue();
 
          axios
              .post('/Roslyner/Build', {
@@ -53,27 +55,7 @@ namespace Roslyner.Test
                 height="600"
                 language="csharp"
                 theme="vs-dark"
-                value={`using System;
-using Roslyner.Models;
-
-namespace Roslyner.Test
-{
-    public class Foo : IFoo
-    {
-        public int Sum(int a, int b)
-        {
-            return 2 * (a + b);
-        }
-        public int Method()
-        {
-            //Console.WriteLine(""Hello from Foo"");
-            return 27;
-        }
-        public void Method1()
-        {
-        }
-    }
-}`}
+                value={ this.state.code }
             />
             <div>
                 {this.state.codeResult}
