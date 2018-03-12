@@ -10,10 +10,10 @@ namespace Roslyner.Web.Models
         private readonly Lazy<Assembly> _assembly;
         private readonly string _namespace;
 
-        public InjectedObject(IEnumerable<byte> compiledCode, string _namespace)
+        public InjectedObject(IEnumerable<byte> compiledCode, string @namespace)
         {
             _assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
-            this._namespace = _namespace;
+            this._namespace = @namespace;
         }
 
         public int Sum(int a, int b)

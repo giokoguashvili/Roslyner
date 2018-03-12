@@ -9,11 +9,15 @@ namespace Roslyner.Web.Models
 {
     public class CompiledCode : IEnumerable<byte>
     {
+        private readonly string _assemblyName;
+        private readonly IEnumerable<MetadataReference> _references;
         private readonly string _code;
 
-        public CompiledCode(string code)
+        public CompiledCode(string code, IEnumerable<MetadataReference> references, string assemblyName)
         {
-            this._code = code;
+            _assemblyName = assemblyName;
+            _references = references;
+            _code = code;
         }
 
         public IEnumerator<byte> GetEnumerator()
@@ -21,7 +25,7 @@ namespace Roslyner.Web.Models
             using (var dll = new MemoryStream())
             {
                 CSharpCompilation.Create(
-                    "Foo",
+                    _assemblyName,
                     new[] { CSharpSyntaxTree.ParseText(_code) },
                     references: new MetadataReference[]
                     {

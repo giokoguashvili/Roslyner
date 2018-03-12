@@ -11,11 +11,17 @@ namespace Roslyner.Web.Controllers
             return Json(
                 new BuildResult(
                     new InjectedObject(
-                        new CompiledCode(model.Code),
-                        "Roslyner.Test.Foo"
+                        new CompiledCode(
+                            model.Code, 
+                            new References(
+                                typeof(object).Assembly.Location,
+                                typeof(Program).Assembly.Location
+                            ),
+                            assemblyName: "Foo"
+                        ),
+                        @namespace: "Roslyner.Test.Foo"
                     )
                     .Sum(27, 14)
-                    .ToString()
                 )
             );
         }

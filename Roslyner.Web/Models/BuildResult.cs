@@ -6,7 +6,8 @@
         {
             CodeResult = codeResult;
         }
-
+        public BuildResult(int methodResult) : this(methodResult.ToString()) { }
+       
         public string CodeResult { get; }
     }
 }
