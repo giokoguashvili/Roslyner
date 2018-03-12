@@ -16,7 +16,7 @@ namespace Roslyner.Web.Controllers
                             new References(
                                 new TypesAssemblyLocation(
                                     typeof(object),
-                                    typeof(Program)
+                                    typeof(IFoo)
                                 )
                             ),
                             assemblyName: "Foo"

@@ -27,11 +27,7 @@ namespace Roslyner.Web.Models
                 CSharpCompilation.Create(
                     _assemblyName,
                     new[] { CSharpSyntaxTree.ParseText(_code) },
-                    references: new MetadataReference[]
-                    {
-                        MetadataReference.CreateFromFile(typeof(object).Assembly.Location),
-                        MetadataReference.CreateFromFile(typeof(Program).Assembly.Location)
-                    },
+                    _references,
                     options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 ).Emit(dll);
                 return dll
