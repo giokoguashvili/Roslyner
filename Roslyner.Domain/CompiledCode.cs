@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,12 +26,17 @@ namespace Roslyner.Domain
         {
             using (var dll = new MemoryStream())
             {
-                CSharpCompilation.Create(
+                var emitResult = CSharpCompilation.Create(
                     _assemblyName,
                     new[] { CSharpSyntaxTree.ParseText(_code) },
                     _references,
                     options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 ).Emit(dll);
+                if (!emitResult.Success)
+                {
+                    throw new Exception("vax");
+                }
+
                 return dll
                     .ToArray()
                     .ToList()

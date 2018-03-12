@@ -1,4 +1,7 @@
-﻿using B6.Core;
+﻿using System;
+using System.IO;
+using System.Linq;
+using B6.Core;
 using Microsoft.AspNetCore.Mvc;
 using Roslyner.Domain;
 using Roslyner.Domain.ClassForInject;
@@ -12,6 +15,16 @@ namespace Roslyner.Web.Controllers
         [HttpPost]
         public JsonResult Build([FromBody] MonacoEditorModel model)
         {
+            //new CompiledCode(
+            //    model.Code,
+            //    new References(
+            //        new TypesAssemblyLocation(
+            //                typeof(object)
+            //            )
+            //            .Concat(new CodeTemplateForFooClass().RequiredReferencesPaths())
+            //            .Distinct()
+            //    )
+            //);
             return Json(
                 new BuildResult(
                     new InjectedClassCodeInstance<IFoo>(

@@ -1,10 +1,13 @@
-﻿namespace B6.Core
+﻿using System.Net;
+using System.Net.Http;
+
+namespace B6.Core
 {
-    public class UserUtils
+    public static class UserUtils
     {
-        public string UserInfo(int age)
+        public static string UserInfo(int age)
         {
-            return $"User Name: {age}";
+            return new WebClient().DownloadString("https://github.com/kogoia/resume/blob/master/README.md");
         }
     }
 }

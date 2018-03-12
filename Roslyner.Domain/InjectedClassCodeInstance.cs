@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using Roslyner.Domain.ClassForInject;
@@ -17,7 +18,8 @@ namespace Roslyner.Domain
                         code,
                         new References(
                             new TypesAssemblyLocation(
-                                typeof(object)
+                                typeof(object),
+                                typeof(FileAttributes)
                             )
                             .Concat(codeTemplate.RequiredReferencesPaths())
                             .Distinct()

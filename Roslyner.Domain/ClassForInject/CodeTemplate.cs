@@ -47,7 +47,7 @@ namespace {_namespace}
     {{
         public string Check(int a, int b)
         {{
-            return ""2 * (a + b)"";
+            return $""2 * (a + b) {{UserUtils.UserInfo(b)}}"";
         }}
     }}
 }}";
