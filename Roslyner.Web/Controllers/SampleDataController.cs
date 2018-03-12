@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Roslyner.Domain;
+using Roslyner.Web.Models;
 
 namespace Roslyner.Web.Controllers
 {
@@ -38,6 +40,14 @@ namespace Roslyner.Web.Controllers
                     return 32 + (int)(TemperatureC / 0.5556);
                 }
             }
+        }
+
+        [HttpGet("[action]")]
+        public CodeTemplateResult<IFoo> CodeTemplate()
+        {
+            return new CodeTemplateResult<IFoo>(
+                        new CodeTemplateForInterface<IFoo>()
+                    );
         }
     }
 }

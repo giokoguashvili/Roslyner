@@ -11,21 +11,24 @@ namespace Roslyner.Web.Controllers
         {
             return Json(
                 new BuildResult(
-                    new InjectedObject(
-                        new CompiledCode(
-                            model.Code, 
-                            new References(
-                                new TypesAssemblyLocation(
-                                    typeof(object),
-                                    typeof(IFoo)
-                                )
-                            )
-                        ),
-                        @namespace: "Roslyner.Domain.Foo"
-                    )
-                    .Sum(27, 14)
+                    new InjectedClassCodeInstance<IFoo>(model.Code)
+                        .Instance()
+                        .Sum(27, 14)
                 )
             );
+
+            //new ClassInstance<IFoo>(
+            //    new CompiledCode(
+            //        model.Code,
+            //        new References(
+            //            new TypesAssemblyLocation(
+            //                typeof(object),
+            //                typeof(IFoo)
+            //            )
+            //        )
+            //    ),
+            //    new CodeTemplateForInterface<IFoo>().NameWithNamespace()
+            //)
         }
     }
 }

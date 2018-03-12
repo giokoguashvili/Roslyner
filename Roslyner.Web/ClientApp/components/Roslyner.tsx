@@ -5,36 +5,29 @@ import axios from 'axios';
 
 interface IMonacoEditorModel {
     codeResult: string,
-    code: string,
+    codeTemplate: string,
 }
 
+interface ICodeTemplateResult {
+    template: string
+}
 export class Roslyner extends React.Component<RouteComponentProps<{}>, IMonacoEditorModel> {
     constructor(props: RouteComponentProps<{}>) {
         super(props);
+
+
         this.state = {
             codeResult: "Empty",
-            code: `using System;
+            codeTemplate: "Empty"
+        }
 
-namespace Roslyner.Domain
-{
-    public class Foo : IFoo
-    {
-        public int Sum(int a, int b)
-        {
-            return 2 * (a + b);
-        }
-        public int Method()
-        {
-            //Console.WriteLine(""Hello from Foo"");
-            return 27;
-        }
-        public void Method1()
-        {
-        }
+        fetch('api/SampleData/CodeTemplate')
+            .then(response => response.json() as Promise<ICodeTemplateResult>)
+            .then(data => {
+                this.setState({ codeTemplate: data.template });
+            });
     }
-}`
-        }
-    }
+
     private run(code: string) {
          axios
              .post('/Roslyner/Build', { code })
@@ -46,8 +39,8 @@ namespace Roslyner.Domain
              .catch((err: any) => console.log(err));
     }
 
-    private onChange(code: string) {
-        this.setState({ code });
+    private onChange(codeTemplate: string) {
+        this.setState({ codeTemplate });
     }
 
     private editorValue(): string {
@@ -63,7 +56,7 @@ namespace Roslyner.Domain
                 language="csharp"
                 theme="vs-dark"
                 onChange={() => this.onChange(this.editorValue())}
-                value={ this.state.code }
+                value={this.state.codeTemplate }
             />
             <div>
                 {this.state.codeResult}
