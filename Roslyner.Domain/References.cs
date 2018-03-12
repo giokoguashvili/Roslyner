@@ -1,11 +1,9 @@
-﻿using Microsoft.CodeAnalysis;
-using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 
-namespace Roslyner.Web.Models
+namespace Roslyner.Domain
 {
     public class References : IEnumerable<MetadataReference>
     {

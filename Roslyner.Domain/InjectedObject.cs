@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace Roslyner.Web.Models
+namespace Roslyner.Domain
 {
     public class InjectedObject : IFoo
     {

@@ -1,4 +1,4 @@
-﻿namespace Roslyner.Web.Models
+﻿namespace Roslyner.Domain
 {
     public interface IFoo
     {

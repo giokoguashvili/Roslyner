@@ -1,11 +1,11 @@
-﻿using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
 
-namespace Roslyner.Web.Models
+namespace Roslyner.Domain
 {
     public class CompiledCode : IEnumerable<byte>
     {
@@ -13,6 +13,7 @@ namespace Roslyner.Web.Models
         private readonly IEnumerable<MetadataReference> _references;
         private readonly string _code;
 
+        public CompiledCode(string code, IEnumerable<MetadataReference> references) : this(code, references, "InjectedCodeAssembly") {}
         public CompiledCode(string code, IEnumerable<MetadataReference> references, string assemblyName)
         {
             _assemblyName = assemblyName;

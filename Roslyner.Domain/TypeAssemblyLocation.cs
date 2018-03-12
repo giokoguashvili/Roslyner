@@ -2,9 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace Roslyner.Web.Controllers
+namespace Roslyner.Domain
 { 
     public class TypesAssemblyLocation : IEnumerable<string>
     {

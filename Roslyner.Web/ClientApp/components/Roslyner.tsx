@@ -3,24 +3,19 @@ import { RouteComponentProps } from 'react-router';
 import MonacoEditor from 'react-monaco-editor';
 import axios from 'axios';
 
-interface MonacoEditorModel {
+interface IMonacoEditorModel {
     codeResult: string,
-    code: string
+    code: string,
 }
 
-class RoslynerController {
-
-}
-
-export class Roslyner extends React.Component<RouteComponentProps<{}>, MonacoEditorModel> {
+export class Roslyner extends React.Component<RouteComponentProps<{}>, IMonacoEditorModel> {
     constructor(props: RouteComponentProps<{}>) {
         super(props);
         this.state = {
             codeResult: "Empty",
             code: `using System;
-using Roslyner.Web.Models;
 
-namespace Roslyner.Test
+namespace Roslyner.Domain
 {
     public class Foo : IFoo
     {

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Roslyner.Domain;
 using Roslyner.Web.Models;
 
 namespace Roslyner.Web.Controllers
@@ -18,10 +19,9 @@ namespace Roslyner.Web.Controllers
                                     typeof(object),
                                     typeof(IFoo)
                                 )
-                            ),
-                            assemblyName: "Foo"
+                            )
                         ),
-                        @namespace: "Roslyner.Test.Foo"
+                        @namespace: "Roslyner.Domain.Foo"
                     )
                     .Sum(27, 14)
                 )
