@@ -1,5 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using B6.Core;
+using Microsoft.AspNetCore.Mvc;
 using Roslyner.Domain;
+using Roslyner.Domain.ClassForInject;
+using Roslyner.Domain.Interfaces;
 using Roslyner.Web.Models;
 
 namespace Roslyner.Web.Controllers
@@ -11,24 +14,14 @@ namespace Roslyner.Web.Controllers
         {
             return Json(
                 new BuildResult(
-                    new InjectedClassCodeInstance<IFoo>(model.Code)
-                        .Instance()
-                        .Sum(27, 14)
+                    new InjectedClassCodeInstance<IFoo>(
+                            model.Code, 
+                            new CodeTemplateForFooClass()
+                    )
+                    .Instance()
+                    .Check(27, 14)
                 )
             );
-
-            //new ClassInstance<IFoo>(
-            //    new CompiledCode(
-            //        model.Code,
-            //        new References(
-            //            new TypesAssemblyLocation(
-            //                typeof(object),
-            //                typeof(IFoo)
-            //            )
-            //        )
-            //    ),
-            //    new CodeTemplateForInterface<IFoo>().NameWithNamespace()
-            //)
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Roslyner.Domain;
+using Roslyner.Domain.ClassForInject;
 
 namespace Roslyner.Web.Models
 {

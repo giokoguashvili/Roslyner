@@ -1,28 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using Roslyner.Domain.ClassForInject;
+using Roslyner.Domain.Interfaces;
 
 namespace Roslyner.Domain
 {
     public class InjectedClassCodeInstance<T> : IClassInstance<T>
     {
         private readonly IClassInstance<T> _class;
-        public InjectedClassCodeInstance(string code)
+        public InjectedClassCodeInstance(string code, CodeTemplateForInterface<T> codeTemplate)
             : this(
                 new ClassInstance<T>(
                     new CompiledCode(
                         code,
                         new References(
                             new TypesAssemblyLocation(
-                                typeof(object),
-                                typeof(T)
+                                typeof(object)
                             )
+                            .Concat(codeTemplate.RequiredReferencesPaths())
+                            .Distinct()
                         )
                     ),
-                    new CodeTemplateForInterface<T>().NameWithNamespace()
+                    codeTemplate.NameWithNamespace()
                 )
              )
-        { }
+        {
+                
+        }
 
         public InjectedClassCodeInstance(IClassInstance<T> classInstance)
         {

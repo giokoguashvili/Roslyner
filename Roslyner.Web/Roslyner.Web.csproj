@@ -57,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\B6.Core\B6.Core.csproj" />
     <ProjectReference Include="..\Roslyner.Domain\Roslyner.Domain.csproj" />
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Roslyner.Domain.Interfaces;
 
 namespace Roslyner.Domain
 {
@@ -13,7 +14,7 @@ namespace Roslyner.Domain
         public ClassInstance(IEnumerable<byte> compiledCode, string @namespace)
         {
             _assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
-            this._namespace = @namespace;
+            _namespace = @namespace;
         }
 
         public T Instance()

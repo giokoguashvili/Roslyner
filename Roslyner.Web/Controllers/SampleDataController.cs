@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using B6.Core;
 using Roslyner.Domain;
+using Roslyner.Domain.ClassForInject;
+using Roslyner.Domain.Interfaces;
 using Roslyner.Web.Models;
 
 namespace Roslyner.Web.Controllers
@@ -46,7 +49,7 @@ namespace Roslyner.Web.Controllers
         public CodeTemplateResult<IFoo> CodeTemplate()
         {
             return new CodeTemplateResult<IFoo>(
-                        new CodeTemplateForInterface<IFoo>()
+                        new CodeTemplateForFooClass()
                     );
         }
     }

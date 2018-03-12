@@ -9,6 +9,11 @@ namespace Roslyner.Domain
     {
         private readonly Type[] _types;
 
+        public TypesAssemblyLocation(IEnumerable<Type> types, params Type[] ptypes)
+            : this(types.Concat(ptypes).ToArray())
+        {
+                
+        }
         public TypesAssemblyLocation(params Type[] types)
         {
             _types = types;
