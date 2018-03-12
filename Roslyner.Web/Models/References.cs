@@ -9,9 +9,9 @@ namespace Roslyner.Web.Models
 {
     public class References : IEnumerable<MetadataReference>
     {
-        private readonly string[] _paths;
+        private readonly IEnumerable<string>_paths;
 
-        public References(params string[] paths)
+        public References(IEnumerable<string> paths)
         {
             _paths = paths;
         }
@@ -24,7 +24,7 @@ namespace Roslyner.Web.Models
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return GetEnumerator();
         }
     }
 }

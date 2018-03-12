@@ -14,8 +14,10 @@ namespace Roslyner.Web.Controllers
                         new CompiledCode(
                             model.Code, 
                             new References(
-                                typeof(object).Assembly.Location,
-                                typeof(Program).Assembly.Location
+                                new TypesAssemblyLocation(
+                                    typeof(object),
+                                    typeof(Program)
+                                )
                             ),
                             assemblyName: "Foo"
                         ),
