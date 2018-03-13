@@ -46,9 +46,9 @@ namespace Roslyner.Web.Controllers
         }
 
         [HttpGet("[action]")]
-        public CodeTemplateResult<IFoo> CodeTemplate()
+        public CodeTemplateResult<IRule> CodeTemplate()
         {
-            return new CodeTemplateResult<IFoo>(
+            return new CodeTemplateResult<IRule>(
                         new CodeTemplateForFooClass()
                     );
         }

@@ -45,9 +45,9 @@ namespace {_namespace}
 {{
     public class {_className} : {typeof(T).Name}
     {{
-        public string Check(int a, int b)
+        public Customer Check()
         {{
-            return $""2 * (a + b) {{UserUtils.UserInfo(b)}}"";
+            return UserUtils.GetCustomer();
         }}
     }}
 }}";

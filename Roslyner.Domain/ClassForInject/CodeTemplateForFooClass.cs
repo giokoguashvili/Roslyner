@@ -2,7 +2,7 @@
 
 namespace Roslyner.Domain.ClassForInject
 {
-    public class CodeTemplateForFooClass : CodeTemplateForInterface<IFoo>
+    public class CodeTemplateForFooClass : CodeTemplateForInterface<IRule>
     {
         public CodeTemplateForFooClass() : base(
                 "Foo",

@@ -53,21 +53,21 @@ export class Roslyner extends React.Component<RouteComponentProps<{}>, IMonacoEd
     private editorValue(): string {
         return (this.refs.monaco as any).editor.getModel().getValue();
     }
-
+    showMsg = () => 'Hello World';
     public render() {
         return <div>
-                   <MonacoEditor
-                       ref="monaco"
-                       width="800"
-                       height="600"
-                       language="csharp"
-                       theme="vs-dark"
-                       onChange={() => this.onChange(this.editorValue())}
-                       value={this.state.codeTemplate}/>
-                   <button onClick={() => this.run(this.editorValue())}>Run</button>
-                   <div>
-                       {this.state.codeResult}
-                   </div>
-               </div>;
+            <MonacoEditor
+                ref="monaco"
+                width="800"
+                height="600"
+                language="csharp"
+                theme="vs-dark"
+                onChange={() => this.onChange(this.editorValue())}
+                value={this.state.codeTemplate} />
+            <button onClick={() => this.run(this.editorValue())}>Run</button>
+            <div>
+                {this.state.codeResult}
+            </div>
+        </div>;
     }
 }
