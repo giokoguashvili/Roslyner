@@ -1,4 +1,4 @@
-﻿namespace Roslyner.Domain
+﻿namespace Roslyner.Web.Models
 {
     public class MonacoEditorModel
     {

@@ -25,16 +25,25 @@ namespace Roslyner.Web.Controllers
             //            .Distinct()
             //    )
             //);
-            return Json(
-                new BuildResult(
-                    new InjectedClassCodeInstance<IFoo>(
-                            model.Code, 
-                            new CodeTemplateForFooClass()
+
+            try
+            {
+                return Json(
+                    new BuildResult(
+                        new InjectedClassCodeInstance<IFoo>(
+                                model.Code,
+                                new CodeTemplateForFooClass()
+                            )
+                            .Instance()
+                            .Check(27, 14)
                     )
-                    .Instance()
-                    .Check(27, 14)
-                )
-            );
+                );
+            }
+            catch (Exception e)
+            {
+                return Json(new BuildResult(e.Message));
+            }
+            
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using Roslyner.Domain.ClassForInject;
 using Roslyner.Domain.Interfaces;
@@ -19,7 +20,8 @@ namespace Roslyner.Domain
                         new References(
                             new TypesAssemblyLocation(
                                 typeof(object),
-                                typeof(FileAttributes)
+                                typeof(FileAttributes),
+                                typeof(WebClient)
                             )
                             .Concat(codeTemplate.RequiredReferencesPaths())
                             .Distinct()

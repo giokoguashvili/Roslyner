@@ -8,6 +8,10 @@ interface IMonacoEditorModel {
     codeTemplate: string,
 }
 
+interface IBuildResult {
+    codeResult: string
+}
+
 interface ICodeTemplateResult {
     template: string
 }
@@ -15,28 +19,31 @@ export class Roslyner extends React.Component<RouteComponentProps<{}>, IMonacoEd
     constructor(props: RouteComponentProps<{}>) {
         super(props);
 
-
         this.state = {
             codeResult: "Empty",
             codeTemplate: "Empty"
         }
 
-        fetch('api/SampleData/CodeTemplate')
-            .then(response => response.json() as Promise<ICodeTemplateResult>)
-            .then(data => {
-                this.setState({ codeTemplate: data.template });
-            });
+        axios
+            .get("api/SampleData/CodeTemplate")
+            .then(res => res.data as ICodeTemplateResult)
+            .then(data =>
+                this.setState({
+                    codeTemplate: data.template
+                })
+            );
     }
 
     private run(code: string) {
-         axios
-             .post('/Roslyner/Build', { code })
-             .then((res: any) => {
-                 this.setState({ 
-                     codeResult: res.data.codeResult 
-                 });
-             })
-             .catch((err: any) => console.log(err));
+        axios
+            .post('/Roslyner/Build', { code })
+            .then(res => res.data as IBuildResult)
+            .then(data => {
+                this.setState({
+                    codeResult: data.codeResult
+                });
+            })
+            .catch((err: any) => console.log(err));
     }
 
     private onChange(codeTemplate: string) {
@@ -49,19 +56,18 @@ export class Roslyner extends React.Component<RouteComponentProps<{}>, IMonacoEd
 
     public render() {
         return <div>
-            <MonacoEditor
-                ref="monaco"
-                width="800"
-                height="600"
-                language="csharp"
-                theme="vs-dark"
-                onChange={() => this.onChange(this.editorValue())}
-                value={this.state.codeTemplate }
-            />
-            <div>
-                {this.state.codeResult}
-            </div>
-            <button onClick={() => this.run(this.editorValue()) }>Run</button>
-        </div>
+                   <MonacoEditor
+                       ref="monaco"
+                       width="800"
+                       height="600"
+                       language="csharp"
+                       theme="vs-dark"
+                       onChange={() => this.onChange(this.editorValue())}
+                       value={this.state.codeTemplate}/>
+                   <button onClick={() => this.run(this.editorValue())}>Run</button>
+                   <div>
+                       {this.state.codeResult}
+                   </div>
+               </div>;
     }
 }

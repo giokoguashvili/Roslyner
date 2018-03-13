@@ -17,7 +17,7 @@ namespace Roslyner.Domain
         {
             return _classesForDependencies
                 .Select(t => t.Assembly.Location)
-                .Concat(new List<string>() { @"C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.5\System.Runtime.dll" })
+                //.Concat(new List<string>() { @"C:\Program Files\dotnet\shared\Microsoft.NETCore.App\2.0.5\System.Runtime.dll" })
                 .Distinct();
         }
 

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using LanguageExt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 
@@ -32,9 +33,18 @@ namespace Roslyner.Domain
                     _references,
                     options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 ).Emit(dll);
+
                 if (!emitResult.Success)
                 {
-                    throw new Exception("vax");
+                    throw new Exception(
+                                String
+                                    .Join(
+                                        Environment.NewLine, 
+                                        emitResult
+                                            .Diagnostics
+                                            .Select(d => d.GetMessage())
+                                    )
+                          );
                 }
 
                 return dll

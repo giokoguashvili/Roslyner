@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="2.1.32" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="2.7.0" />
   </ItemGroup>
 
