@@ -17,49 +17,25 @@ namespace Roslyner.Web.Controllers
         [HttpPost]
         public JsonResult Build([FromBody] MonacoEditorModel model)
         {
-            return 
-                new CompiledCode(
-                    model.Code,
-                    new CodeTemplateForFooClass()
-                ).Match(
-                    (c) => Json(
-                            new BuildResult(
-                                JsonConvert
-                                    .SerializeObject(
-                                        new InjectedClassCodeInstance<IRule>(
-                                            c,
-                                            new CodeTemplateForFooClass()
-                                        )
-                                        .Instance()
-                                        .Check()
-                                    )
-                            )
-                        ),
-                    (e) => Json(new BuildResult(e.Message))
-                );
-
-            //try
-            //{
-
-            //    return Json(
-            //        new BuildResult(
-            //            JsonConvert
-            //                .SerializeObject(
-            //                    new InjectedClassCodeInstance<IRule>(
-            //                        model.Code,
-            //                        new CodeTemplateForFooClass()
-            //                    )
-            //                    .Instance()
-            //                    .Check()
-            //                )
-            //        )
-            //    );
-            //}
-            //catch (Exception e)
-            //{
-            //    return Json(new BuildResult(e.Message));
-            //}
-
+            return new CompiledCode(
+                        model.Code,
+                        new CodeTemplateForFooClass()
+                    ).Match(
+                        (compiledCode) => Json(
+                                            new BuildResult(
+                                                JsonConvert
+                                                    .SerializeObject(
+                                                        new InjectedClassCodeInstance<IRule>(
+                                                            compiledCode,
+                                                            new CodeTemplateForFooClass()
+                                                        )
+                                                        .Instance()
+                                                        .Check()
+                                                    )
+                                            )
+                                        ),
+                        (error) => Json(new BuildResult(error.Message))
+                    );
         }
     }
 }

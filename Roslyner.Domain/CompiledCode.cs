@@ -11,15 +11,6 @@ using Types.Union;
 
 namespace Roslyner.Domain
 {
-    public class CompileError
-    {
-        public CompileError(string message)
-        {
-            Message = message;
-        }
-
-        public string Message { get; }
-    }
     public class CompiledCode : Either<IEnumerable<byte>, CompileError>
     {
         public CompiledCode(string code, CodeTemplateForFooClass template) : this(code, template, "InjectedCodeAssembly") { }
