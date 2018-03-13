@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Roslyner.Domain.Interfaces;
+using Types.Union;
 
 namespace Roslyner.Domain
 {
     public class ClassInstance<T> : IClassInstance<T>
     {
         private readonly Lazy<Assembly> _assembly;
+        private readonly IEnumerable<byte> _compiledCode;
         private readonly string _namespace;
 
         public ClassInstance(IEnumerable<byte> compiledCode, string @namespace)
         {
             _assembly = new Lazy<Assembly>(() => Assembly.Load(compiledCode.ToArray()));
+            _compiledCode = compiledCode;
             _namespace = @namespace;
         }
 

@@ -1,33 +1,54 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 
 namespace Roslyner.Domain.ClassForInject
 {
-    public abstract class CodeTemplateForInterface<T>
+
+    public class Dependencies
     {
         private readonly Usings _usings;
+        private readonly References _references;
+
+        public Dependencies(params Type[] types)
+            : this(
+                  new Usings(types), 
+                  new References(types)
+              )
+        { }
+        public Dependencies(Usings usings, References references)
+        {
+            _usings = usings;
+            _references = references;
+        }
+        public Usings Usings()
+        {
+            return _usings;
+        }
+        public References References()
+        {
+            return _references;
+        }
+    }
+
+    public abstract class CodeTemplateForInterface<T>
+    {
         private readonly string _namespace;
+        private readonly Dependencies _dependencies;
         private readonly string _className;
 
-        protected CodeTemplateForInterface(string className, string @namespace, params Type[] classesForDependencies)
-            : this(className, @namespace, new Usings(classesForDependencies.Concat(new List<Type>() { typeof(T) }).ToArray())) { }
-
-        protected CodeTemplateForInterface(string className, string @namespace, Usings usings)
+        protected CodeTemplateForInterface(string className, string @namespace, Dependencies dependencies)
         {
             _className = className;
-            _usings = usings;
             _namespace = @namespace;
+            _dependencies = dependencies;
         }
 
-        public string Namespace()
+        public Dependencies Dependencies()
         {
-            return _namespace;
-        }
-
-        public IEnumerable<string> RequiredReferencesPaths()
-        {
-            return _usings.ReferencePaths();
+            return _dependencies;
         }
 
         public string NameWithNamespace()
@@ -39,7 +60,7 @@ namespace Roslyner.Domain.ClassForInject
         {
             return
                 $@"using System;
-{_usings}
+{_dependencies.Usings()}
 
 namespace {_namespace}
 {{

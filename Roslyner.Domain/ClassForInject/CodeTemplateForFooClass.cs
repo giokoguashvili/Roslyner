@@ -1,4 +1,6 @@
 ﻿using B6.Core;
+using System.IO;
+using System.Net;
 
 namespace Roslyner.Domain.ClassForInject
 {
@@ -7,8 +9,16 @@ namespace Roslyner.Domain.ClassForInject
         public CodeTemplateForFooClass() : base(
                 "Foo",
                 "FooNamespace",
-                typeof(UserUtils)
+                new Dependencies(
+                    typeof(object),
+                    typeof(IRule),
+                    typeof(FileAttributes),
+                    typeof(WebClient),
+                    typeof(UserUtils)
+                )
             )
         {}
     }
+
+
 }

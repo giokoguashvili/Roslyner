@@ -3,60 +3,61 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using LanguageExt;
+using B6.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Roslyner.Domain.ClassForInject;
+using Types.Union;
 
 namespace Roslyner.Domain
 {
-    public class CompiledCode : IEnumerable<byte>
+    public class CompileError
     {
-        private readonly string _assemblyName;
-        private readonly IEnumerable<MetadataReference> _references;
-        private readonly string _code;
-
-        public CompiledCode(string code, IEnumerable<MetadataReference> references) : this(code, references, "InjectedCodeAssembly") {}
-        public CompiledCode(string code, IEnumerable<MetadataReference> references, string assemblyName)
+        public CompileError(string message)
         {
-            _assemblyName = assemblyName;
-            _references = references;
-            _code = code;
+            Message = message;
         }
 
-        public IEnumerator<byte> GetEnumerator()
+        public string Message { get; }
+    }
+    public class CompiledCode : Either<IEnumerable<byte>, CompileError>
+    {
+        public CompiledCode(string code, CodeTemplateForFooClass template) : this(code, template, "InjectedCodeAssembly") { }
+        public CompiledCode(string code, CodeTemplateForFooClass template, string assemblyName) : base(() =>
         {
             using (var dll = new MemoryStream())
             {
                 var emitResult = CSharpCompilation.Create(
-                    _assemblyName,
-                    new[] { CSharpSyntaxTree.ParseText(_code) },
-                    _references,
+                    assemblyName,
+                    new[] { CSharpSyntaxTree.ParseText(code) },
+                    template.Dependencies().References(),
                     options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary)
                 ).Emit(dll);
 
                 if (!emitResult.Success)
                 {
-                    throw new Exception(
-                                String
-                                    .Join(
-                                        Environment.NewLine, 
-                                        emitResult
-                                            .Diagnostics
-                                            .Select(d => d.GetMessage())
-                                    )
-                          );
+                    return new CompiledCode(
+                                new CompileError(
+                                    String
+                                        .Join(
+                                            Environment.NewLine,
+                                            emitResult
+                                                .Diagnostics
+                                                .Select(d => d.GetMessage())
+                                        )
+                                )
+                           );
                 }
 
-                return dll
-                    .ToArray()
-                    .ToList()
-                    .GetEnumerator();
+                return new CompiledCode(
+                            dll
+                                .ToArray()
+                                .ToList()
+                    );
             }
-        }
+        }) {}
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        public CompiledCode(IEnumerable<byte> t1) : base(t1) {}
+        public CompiledCode(CompileError t2) : base(t2) {}
     }
 }
