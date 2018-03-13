@@ -6,7 +6,6 @@ using System.Net;
 
 namespace Roslyner.Domain.ClassForInject
 {
-
     public class Dependencies
     {
         private readonly Usings _usings;
