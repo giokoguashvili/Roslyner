@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Roslyner.Domain;
 using Roslyner.Domain.ClassForInject;
+using Roslyner.Domain.Infrastructure;
 using Roslyner.Domain.Interfaces;
 using Roslyner.Web.Models;
 
@@ -27,6 +28,29 @@ namespace Roslyner.Web.Controllers
                         .Bind((a) => new InjectedClassResult(a))
                         .Match(new InjectedClassResutMatcher())
                     );
+
+            return new CompiledCode(
+                model.Code,
+                new CodeTemplateForFooClass()
+            )
+            .Bind((a) => new Either<Customer, CompileError>(
+                            new InjectedClassCodeInstance<IRule>(
+                                    a,
+                                    new CodeTemplateForFooClass()
+                                )
+                                .Instance()
+                                .Check()
+                            )
+            )
+            .Match(
+                (compiledCode) => Json(
+                    new BuildResult(
+                        JsonConvert
+                            .SerializeObject(compiledCode)
+                    )
+                ),
+                (error) => Json(new BuildResult(error.Message))
+            );
 
             return new CompiledCode(
                         model.Code,
