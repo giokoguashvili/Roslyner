@@ -40,6 +40,18 @@ namespace Types.Union
             }
             throw new Exception("can't match");
         }
+        public interface IMatcher<TResult>
+        {
+            TResult F1(T1 t);
+            TResult F2(T2 t);
+
+        }
+        public TResult Match<TResult>(
+            IMatcher<TResult> matcher
+        )
+        {
+            return this.Match((a) => matcher.F1(a), (e) => matcher.F2(e));
+        }
 
         //public object Content()
         //{
