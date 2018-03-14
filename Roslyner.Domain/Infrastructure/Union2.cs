@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Types.Union
+namespace Roslyner.Domain.Infrastructure
 {
     public class Union<T1, T2> 
            where T1 : class

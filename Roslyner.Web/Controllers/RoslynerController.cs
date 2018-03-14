@@ -11,7 +11,6 @@ using Roslyner.Domain;
 using Roslyner.Domain.ClassForInject;
 using Roslyner.Domain.Interfaces;
 using Roslyner.Web.Models;
-using Types.Union;
 
 namespace Roslyner.Web.Controllers
 {
@@ -49,25 +48,26 @@ namespace Roslyner.Web.Controllers
                                         ),
                         (error) => Json(new BuildResult(error.Message))
                     );
-            //return new CompiledCode(
-            //            model.Code,
-            //            new CodeTemplateForFooClass()
-            //        ).Match(
-            //            (compiledCode) => Json(
-            //                                new BuildResult(
-            //                                    JsonConvert
-            //                                        .SerializeObject(
-            //                                            new InjectedClassCodeInstance<IRule>(
-            //                                                compiledCode,
-            //                                                new CodeTemplateForFooClass()
-            //                                            )
-            //                                            .Instance()
-            //                                            .Check()
-            //                                        )
-            //                                )
-            //                            ),
-            //            (error) => Json(new BuildResult(error.Message))
-            //        );
+
+            return new CompiledCode(
+                        model.Code,
+                        new CodeTemplateForFooClass()
+                    ).Match(
+                        (compiledCode) => Json(
+                                            new BuildResult(
+                                                JsonConvert
+                                                    .SerializeObject(
+                                                        new InjectedClassCodeInstance<IRule>(
+                                                            compiledCode,
+                                                            new CodeTemplateForFooClass()
+                                                        )
+                                                        .Instance()
+                                                        .Check()
+                                                    )
+                                            )
+                                        ),
+                        (error) => Json(new BuildResult(error.Message))
+                    );
         }
     }
 }

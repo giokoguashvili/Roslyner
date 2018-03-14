@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Types.Union
+namespace Roslyner.Domain.Infrastructure
 {
     public class Either<TLeft, TRight> : Union<TLeft, TRight>,
         IMonad<Either<TLeft, TRight>, TLeft, TRight>
@@ -22,13 +20,10 @@ namespace Types.Union
         {
         }
 
-        public M1 Bind<M1, T2>(Func<TLeft, IMonad<M1, T2, TRight>> m) 
+        public M1 Bind<M1, T2>(Func<TLeft, IMonad<M1, T2, TRight>> m)
             where M1 : IMonad<M1, T2, TRight>, new ()
         {
-            return (M1)Match(
-                         (r) => m(r),
-                         (e) => new M1().Return(e)
-                     );
+            return (M1)Match(m, (e) => new M1().Return(e));
         }
 
         public Either<TLeft, TRight> Return(TLeft t)

@@ -22,27 +22,6 @@ namespace Roslyner.Domain
         {
 
         }
-        //public InjectedClassCodeInstance(string code, CodeTemplateForInterface<T> codeTemplate)
-        //    : this(
-        //        new ClassInstance<T>(
-        //            new CompiledCode(
-        //                code,
-        //                new References(
-        //                    new TypesAssemblyLocation(
-        //                        typeof(object),
-        //                        typeof(FileAttributes),
-        //                        typeof(WebClient)
-        //                    )
-        //                    .Concat(codeTemplate.RequiredReferencesPaths())
-        //                    .Distinct()
-        //                )
-        //            ),
-        //            codeTemplate.NameWithNamespace()
-        //        )
-        //     )
-        //{
-                
-        //}
 
         public InjectedClassCodeInstance(IClassInstance<T> classInstance)
         {

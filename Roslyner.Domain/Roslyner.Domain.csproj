@@ -16,8 +16,4 @@
     <ProjectReference Include="..\B6.Core\B6.Core.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Infrastructure\" />
-  </ItemGroup>
-
 </Project>

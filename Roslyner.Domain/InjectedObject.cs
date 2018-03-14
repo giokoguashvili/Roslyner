@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Roslyner.Domain.Interfaces;
-using Types.Union;
 
 namespace Roslyner.Domain
 {

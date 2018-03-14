@@ -7,7 +7,6 @@ using B6.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Roslyner.Domain.ClassForInject;
-using Types.Union;
 
 namespace Roslyner.Domain
 {
