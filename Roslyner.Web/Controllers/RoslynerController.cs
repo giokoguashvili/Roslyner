@@ -47,26 +47,6 @@ namespace Roslyner.Web.Controllers
                                         ),
                         (error) => Json(new BuildResult(error.Message))
                     );
-
-            return new CompiledCode(
-                        model.Code,
-                        new CodeTemplateForFooClass()
-                    ).Match(
-                        (compiledCode) => Json(
-                                            new BuildResult(
-                                                JsonConvert
-                                                    .SerializeObject(
-                                                        new InjectedClassCodeInstance<IRule>(
-                                                            compiledCode,
-                                                            new CodeTemplateForFooClass()
-                                                        )
-                                                        .Instance()
-                                                        .Check()
-                                                    )
-                                            )
-                                        ),
-                        (error) => Json(new BuildResult(error.Message))
-                    );
         }
     }
 }
