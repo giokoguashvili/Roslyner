@@ -2,14 +2,13 @@
 
 namespace Roslyner.Domain.Infrastructure
 {
-    public class Union<T1, T2> 
+    public class Union<T1, T2>
            where T1 : class
            where T2 : class
     {
         private readonly T1 _t1;
         private readonly T2 _t2;
         private readonly Func<Union<T1, T2>> _factory;
-        private object v;
 
         public Union(T1 t1) { _t1 = t1; }
         public Union(T2 t2) { _t2 = t2; }
@@ -38,26 +37,12 @@ namespace Roslyner.Domain.Infrastructure
             }
             throw new Exception("can't match");
         }
-        public interface IMatcher<TResult>
+
+        public interface IMatcher<out TResult>
         {
             TResult F1(T1 t);
             TResult F2(T2 t);
-
         }
-        public TResult Match<TResult>(
-            IMatcher<TResult> matcher
-        )
-        {
-            return this.Match((a) => matcher.F1(a), (e) => matcher.F2(e));
-        }
-
-        //public object Content()
-        //{
-        //    if (_t1 != null)
-        //    {
-        //        return _t1;
-        //    }
-        //    return _t2;
-        //}
+        public TResult Match<TResult>(IMatcher<TResult> matcher) => Match(matcher.F1, matcher.F2);
     }
 }

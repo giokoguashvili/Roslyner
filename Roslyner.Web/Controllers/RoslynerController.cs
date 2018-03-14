@@ -19,7 +19,6 @@ namespace Roslyner.Web.Controllers
         [HttpPost]
         public JsonResult Build([FromBody] MonacoEditorModel model)
         {
-
             return Json(
                         new CompiledCode(
                             model.Code,

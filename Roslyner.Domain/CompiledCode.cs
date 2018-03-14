@@ -50,10 +50,5 @@ namespace Roslyner.Domain
 
         public CompiledCode(IEnumerable<byte> t1) : base(t1) {}
         public CompiledCode(CompileError t2) : base(t2) {}
-
-        public CompiledCode Return()
-        {
-            return this;
-        }
     }
 }
