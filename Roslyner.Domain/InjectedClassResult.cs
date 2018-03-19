@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Runtime.InteropServices.ComTypes;
 using B6.Core;
+using Qweex.Monads.Either.Type;
 using Roslyner.Domain.ClassForInject;
-using Roslyner.Domain.Infrastructure;
 
 namespace Roslyner.Domain
 {
-    public class InjectedClassResult : Either<Customer, CompileError>
+
+    public class InjectedClassResult : TEither<CompileError, Customer>.P<InjectedClassResult>
     {
         public InjectedClassResult(IEnumerable<byte> compiledCode) : base(() =>
         {

@@ -6,12 +6,12 @@ using System.Linq;
 using B6.Core;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Qweex.Monads.Either.Type;
 using Roslyner.Domain.ClassForInject;
-using Roslyner.Domain.Infrastructure;
 
 namespace Roslyner.Domain
 {
-    public class CompiledCode : Either<IEnumerable<byte>, CompileError>
+    public class CompiledCode : TEither<CompileError, IEnumerable<byte>>.P<CompiledCode>
     {
         public CompiledCode(string code, CodeTemplateForFooClass template) : this(code, template, "InjectedCodeAssembly") { }
         public CompiledCode(string code, CodeTemplateForFooClass template, string assemblyName) : base(() =>
